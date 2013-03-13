@@ -20,6 +20,7 @@ yank_edges<-function(ids,path.2.files,tmp.dir,np) {
   ## np<-20
   read.table(paste(path.2.files,".id",sep=""))->gcta.id
   if (np>1) {
+    require(parallel)
     makeCluster(np)->cl
     clusterApply(cl,tmp.ids,fun,id=id)
     stopCluster(cl)
