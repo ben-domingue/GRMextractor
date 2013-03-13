@@ -22,7 +22,9 @@ yank_edges<-function(ids,path.2.files,tmp.dir,np) {
   if (np>1) {
     require(parallel)
     makeCluster(np)->cl
-    clusterApply(cl,tmp.ids,fun,id=id)
+    ids.list<-list()
+    for (i in 1:nrow(ids)) ids[i,]->ids.list[[i]]
+    clusterApply(cl,ids.list,yank.fun,id=id)
     stopCluster(cl)
   } else  apply(ids,1,yank.fun,id=gcta.id)
   getwd()->save.dir
