@@ -4,8 +4,8 @@ Version: 0.0.1
 Date: 2013-03-10
 Author: Ben Domingue <ben.domingue@gmail.com>
 Maintainer: Ben Domingue <ben.domingue@gmail.com>
-Depends: R (>= 2.1.0), 
-Suggests: 
+Depends: R (>= 2.1.0),
+Suggests: parallel
 Description: Extracts a portion of the GCTA created GRM by ID.
 LazyData: No
 License: GPL (>= 2)

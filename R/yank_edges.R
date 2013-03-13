@@ -1,4 +1,4 @@
-yank_edges<-function(ids,path.2.files,tmp.dir) {
+yank_edges<-function(ids,path.2.files,tmp.dir,np) {
   #ids needs to be a Nx2 matrix of pair ids that are of interest.
   if (length(list.dirs(tmp.dir))>0) system(paste("rm -r",tmp.dir))
   system(paste("mkdir",tmp.dir))
@@ -18,11 +18,12 @@ yank_edges<-function(ids,path.2.files,tmp.dir) {
   }
   ## library(parallel)
   ## np<-20
-  ## makeCluster(np)->cl
   read.table(paste(path.2.files,".id",sep=""))->gcta.id
-  ## clusterApply(cl,tmp.ids,fun,id=id)
-  ## stopCluster(cl)
-  apply(ids,1,yank.fun,id=gcta.id)
+  if (np>1) {
+    makeCluster(np)->cl
+    clusterApply(cl,tmp.ids,fun,id=id)
+    stopCluster(cl)
+  } else  apply(ids,1,yank.fun,id=gcta.id)
   getwd()->save.dir
   setwd(tmp.dir)
   system("rm tmp.grm")
