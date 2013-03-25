@@ -4,7 +4,7 @@ yank_edges<-function(ids,path.2.files,tmp.dir,np) {
   system(paste("mkdir",tmp.dir))
   paste("gunzip -c ",path.2.files,".gz > ",tmp.dir,"/tmp.grm",sep="")->cmd
   system(cmd)
-  yank.fun<-function(y,id) {
+  yank.fun<-function(y,id,tmp.dir) {
     grep(paste("^",y[1],"$",sep=""),id[,2])->n1
     grep(paste("^",y[2],"$",sep=""),id[,2])->n2
     sort(c(n1,n2),decreasing=TRUE)->n
@@ -24,9 +24,9 @@ yank_edges<-function(ids,path.2.files,tmp.dir,np) {
     makeCluster(np)->cl
     ids.list<-list()
     for (i in 1:nrow(ids)) ids[i,]->ids.list[[i]]
-    clusterApply(cl,ids.list,yank.fun,id=id)
+    clusterApply(cl,ids.list,yank.fun,id=id,tmp.dir=tmp.dir)
     stopCluster(cl)
-  } else  apply(ids,1,yank.fun,id=gcta.id)
+  } else  apply(ids,1,yank.fun,id=gcta.id,tmp.dir=tmp.dir)
   getwd()->save.dir
   setwd(tmp.dir)
   system("rm tmp.grm")
