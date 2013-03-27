@@ -17,6 +17,7 @@ yank_edges<-function(ids,path.2.files,tmp.dir,np) {
     TRUE
   }
   read.table(paste(path.2.files,".id",sep=""))->gcta.id
+  print(paste("There are",length(ids),"pairs"))
   if (np>1) {
     require(parallel)
     makeCluster(np)->cl
