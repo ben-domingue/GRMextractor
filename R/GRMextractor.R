@@ -3,6 +3,7 @@ GRMextractor<-function(ids,path.2.files,tmp.dir="/tmp/GRMextractor",np=1,inbreed
   #if a vector, then a matrix of the genetic relatedness between those individuals is formed
   #if a matrix, then an edgelist of those id pairs is formed.
   as.matrix(ids)->ids
+
   if (inbreed==FALSE & ncol(ids)==1) {
     as.character(ids)->ids
     tmp<-list()

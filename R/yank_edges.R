@@ -16,15 +16,14 @@ yank_edges<-function(ids,path.2.files,tmp.dir,np) {
     system(cmd)
     TRUE
   }
-  ## library(parallel)
-  ## np<-20
   read.table(paste(path.2.files,".id",sep=""))->gcta.id
   if (np>1) {
     require(parallel)
     makeCluster(np)->cl
-    ids.list<-list()
-    for (i in 1:nrow(ids)) ids[i,]->ids.list[[i]]
-    clusterApply(cl,ids.list,yank.fun,id=gcta.id,tmp.dir=tmp.dir)
+    ## ids.list<-list()
+    ## for (i in 1:nrow(ids)) ids[i,]->ids.list[[i]]
+    #clusterApply(cl,ids.list,yank.fun,id=gcta.id,tmp.dir=tmp.dir)
+    parRapply(cl,ids,yank.fun,id=gcta.id,tmp.dir=tmp.dir)
     stopCluster(cl)
   } else  apply(ids,1,yank.fun,id=gcta.id,tmp.dir=tmp.dir)
   getwd()->save.dir
