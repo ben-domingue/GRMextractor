@@ -6,7 +6,8 @@ GRMextractor<-function(ids,path.2.files,tmp.dir="/tmp/GRMextractor",np=1,inbreed
   if (inbreed==FALSE & ncol(ids)==1) {
     as.character(ids)->ids
     tmp<-list()
-    for (i in 1:length(ids)) cbind(ids[i],ids[-i])->tmp[[i]]
+    length(ids)->N
+    for (i in 1:(N-1)) cbind(ids[i],ids[(i+1):N])->tmp[[i]]
     do.call("rbind",tmp)->tmp
     tmp->ids
   }
